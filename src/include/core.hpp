@@ -85,7 +85,7 @@ auto operator/(physical_unit<T, Ratio1, M1, KG1, S1, A1, K1, Mol1, CD1> lhs,
                physical_unit<T, Ratio2, M2, KG2, S2, A2, K2, Mol2, CD2> rhs) {
 	return physical_unit<T, std::ratio_divide<Ratio1, Ratio2>, M1-M2,
 	                     KG1-KG2, S1-S2, A1-A2, K1-K2, Mol1-Mol2, CD1-CD2>{
-		lhs.get_value() * rhs.get_value()};
+		lhs.get_value() / rhs.get_value()};
 }
 
 template<typename T, typename Ratio, int... Dimensions>
