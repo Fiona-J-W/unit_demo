@@ -121,14 +121,6 @@ bool operator>(physical_unit<T, Ratio, Dimensions...> lhs,
 	return rhs < lhs;
 }
 
-template<unsigned Exp, typename T, typename Ratio,
-         int M, int KG, int S, int A, int K, int Mol, int CD>
-auto pow(physical_unit<T, Ratio, M, KG, S, A, K, Mol, CD> arg) {
-	return physical_unit<T, std::ratio_multiply<Ratio,std::ratio<Exp,1>>,
-	                     M*Exp, KG*Exp, S*Exp, A*Exp, K*Exp, Mol*Exp, CD*Exp>{
-		static_cast<T>(std::pow(arg.get_value(), Exp))};
-}
-
 
 } // namespace units
 
