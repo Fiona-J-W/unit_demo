@@ -29,9 +29,6 @@ int main() {
 	std::cout << area << "\n";
 	assert(avg_speed1 != avg_speed2);
 
-	auto room = units::pow<3>(1.0_m);
-	std::cout << room << '\n';
-
 	std::cout << 5.0_m / 3.0_h << '\n';
 }
 
