@@ -26,7 +26,7 @@ using square_meter_t = physical_unit<T, std::ratio<1,1>, 2,  0,  0,  0,  0,  0, 
 using square_meter   = square_meter_t<double>;
 
 inline namespace literals {
-auto operator""_m²(long double val) {
+auto operator""_m2(long double val) {
 	return square_meter{static_cast<double>(val)};
 }
 } //namespace literals

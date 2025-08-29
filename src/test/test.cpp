@@ -15,7 +15,7 @@ int main() {
 	auto distance1 = units::meter{3.0};
 	auto distance2 = 4.0_m;
 	auto time      = 2.5_s;
-	auto area      = 15.0_m²;
+	auto area      = 15.0_m2;
 
 	distance2 += 5.0_m;
 

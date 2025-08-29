@@ -4,6 +4,8 @@
 #include <cmath>
 #include <ostream>
 #include <ratio>
+#include <string_view>
+#include <array>
 
 namespace units {
 
@@ -20,15 +22,29 @@ private:
 	T m_value;
 };
 
+
 template<int Dimension, typename Stream, typename String>
-void print_unit_to_stream(Stream& stream, const String& name) {
-	switch (Dimension) {
-		case 0: return;
-		case 1: stream << name; return;
-		case 2: stream << name << u8"²"; return;
-		case 3: stream << name << u8"³"; return;
-		default: stream << name << '^' << Dimension; return;
+bool print_unit_to_stream(Stream& stream, const String& name, bool first) {
+	constexpr auto superscript_digits = std::array<std::string_view, 10>{{"⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"}};
+	if (Dimension == 0) {
+		return first;
 	}
+	if (first) {
+		stream << " ";
+	} else {
+		stream << "⋅";
+	}
+	stream << name;
+	if (Dimension < 0) {
+		stream << "⁻";
+	}
+	auto dimension = std::abs(Dimension);
+	while (dimension > 0) {
+		stream << superscript_digits[dimension  % 10];
+		dimension /= 10;
+	}
+	return false;
+
 }
 
 template<typename Char, typename T, typename Ratio,
@@ -36,13 +52,14 @@ template<typename Char, typename T, typename Ratio,
 std::basic_ostream<Char>& operator<<(std::basic_ostream<Char>& stream,
                                      physical_unit<T, Ratio, M, KG, S, A, K, Mol, CD> value) {
 	stream << value.get_value() * Ratio::num / Ratio::den;
-	print_unit_to_stream<M>(stream,"m");
-	print_unit_to_stream<KG>(stream,"kg");
-	print_unit_to_stream<S>(stream,"s");
-	print_unit_to_stream<A>(stream,"A");
-	print_unit_to_stream<K>(stream,"K");
-	print_unit_to_stream<Mol>(stream,"mol");
-	print_unit_to_stream<CD>(stream,"cd");
+	auto first = true;
+	first = print_unit_to_stream<M>(stream, "m", first);
+	first = print_unit_to_stream<KG>(stream, "kg", first);
+	first = print_unit_to_stream<S>(stream, "s", first);
+	first = print_unit_to_stream<A>(stream, "A", first);
+	first = print_unit_to_stream<K>(stream, "K", first);
+	first = print_unit_to_stream<Mol>(stream, "mol", first);
+	first = print_unit_to_stream<CD>(stream, "cd", first);
 	return stream;
 }
 

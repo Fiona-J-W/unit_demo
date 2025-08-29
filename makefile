@@ -1,21 +1,8 @@
-# Makefile for bin/test
-# created with makefile-creator
-
-
-####################
-#Settings:
-
-
 CXX ?= g++
-FLAGS +=  -Wall -Wextra -Wpedantic -std=c++1y -O0 -D_GLIBCXX_DEBUG -g 
-LIBS += 
-INCLUDES += 
-TARGET = bin/test
+FLAGS +=  -Wall -Wextra -Wpedantic -std=c++23 -O0 -D_GLIBCXX_DEBUG -g 
+TARGET = build/test
 OBJECTS = build/test.o
 
-
-####################
-#Rules:
 
 
 $(TARGET) : $(OBJECTS)
@@ -30,9 +17,6 @@ clean:
 
 all: $(TARGET)
 
-
-####################
-#Dependencies:
 
 
 build/test.o: src/test/test.cpp src/include/aliases.hpp src/include/core.hpp makefile
