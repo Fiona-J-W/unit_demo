@@ -35,6 +35,9 @@ bool print_unit_to_stream(Stream& stream, const String& name, bool first) {
 		stream << "⋅";
 	}
 	stream << name;
+	if (Dimension == 1) {
+		return false;
+	}
 	if (Dimension < 0) {
 		stream << "⁻";
 	}
